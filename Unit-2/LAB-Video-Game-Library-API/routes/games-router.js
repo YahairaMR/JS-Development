@@ -28,6 +28,7 @@ router.get('/:id', (req, res) => {
   }
 });
 
+// POST
 router.post('/', (req, res) => {
   const foundGame = gamesData.find((game) => {
     return game.name === req.body.name;
@@ -48,6 +49,7 @@ router.post('/', (req, res) => {
   }
 });
 
+// PUT
 router.put('/:id', (req, res) => {
   const foundGame = gamesData.find((game) => {
     return game.id === req.params.id;
@@ -69,6 +71,7 @@ router.put('/:id', (req, res) => {
   }
 });
 
+// DELETE
 router.delete('/:id', (req, res) => {
   const gameToDelete = gamesData.find((game) => {
     return req.params.id === game.id;
