@@ -8,12 +8,40 @@ let gamesData = require('../data/games');
 
 // GET
 router.get('/', (req, res) => {
+  let filteredResults = gamesData;
+
+  if (req.query.platform) {
+    // console.log(`Query Params: ${req.query.platform}`)
+    // go through each game and check if the platforms array includes the request query params platform.  If so, add it to the result
+    filteredResults = gamesData.filter((game) => {
+      return game.platforms.includes(req.query.platform);
+    });
+
+    // if (results.length > 0) {
+    //   res.json({ message: "success", payload: results });
+    // } else {
+    //   res.status(404).json({ message: "failure", payload: "No results" });
+    // }
+  } else if (req.query.genre) {
+    filteredResults = gamesData.filter((game) => {
+      return game.genres.includes(req.query.genre);
+    });
+  } else if (req.query.releaseYear) {
+    filteredResults = gamesData.filter((game) => {
+      return Number(req.query.releaseYear) === game.releaseYear;
+    });
+  }
+
   const sortBy = req.query.sortBy || 'name';
   const order = req.query.order || 'asc';
 
-  const sortedGames = sort(gamesData, sortBy, order);
+  const sortedGames = sort(filteredResults, sortBy, order);
 
-  res.json({ message: 'success', payload: sortedGames });
+  if (sortedGames.length > 0) {
+    res.json({ message: 'success', payload: sortedGames });
+  } else {
+    res.status(404).json({ message: 'failure', payload: 'No results' });
+  }
 });
 
 router.get('/:id', (req, res) => {

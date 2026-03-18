@@ -3,14 +3,9 @@ const express = require('express');
 const router = express.Router();
 
 const platformsData = require('../data/platforms');
-const sort = require('../utils');
 
 router.get('/', (req, res) => {
-  const sortBy = req.query.sortBy || 'name';
-  const order = req.query.order || 'asc';
-
-  const sortedPlatforms = sort(platformsData, sortBy, order);
-  res.json({ message: 'success', payload: sortedPlatforms });
+  res.json({ message: 'success', payload: platformsData });
 });
 
 router.get('/:id', (req, res) => {
