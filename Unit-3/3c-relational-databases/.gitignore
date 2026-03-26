@@ -1,0 +1,5 @@
+node_modules/
+.env
+.DS_Store
+
+# before creating the .gitignore I have to create the .env file and add MONGODB_URI and paste the connection string/....-db
